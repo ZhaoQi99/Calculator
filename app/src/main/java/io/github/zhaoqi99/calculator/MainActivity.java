@@ -6,6 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.javia.arity.Symbols;
+import org.javia.arity.SyntaxException;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     /*
@@ -136,6 +139,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
                 break;
             case R.id.ButtonEqu:
+                String f=TextViewFormula.getText().toString();
+                String result=Cal(f);
+                TextViewResult.setText(result);
                 break;
         }
         TextViewFormula.setText(formula);
@@ -149,4 +155,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         SetAllOnClickListener();
     }
 
+    public String Cal(String formula){
+        Symbols s=new Symbols();
+        String result=new String();
+        try{
+            double res=s.eval(formula);
+            result=String.valueOf(res);
+        }catch (SyntaxException e){
+            result="ERROR!";
+        }finally {
+            return result;
+        }
+
+    }
 }
