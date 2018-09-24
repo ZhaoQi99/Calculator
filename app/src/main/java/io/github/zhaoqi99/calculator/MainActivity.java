@@ -2,10 +2,11 @@ package io.github.zhaoqi99.calculator;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     /*
     数字键0-9
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity{
     private TextView TextViewFormula;
     private TextView TextViewResult;
 
+    private String formula="0";
     void FindAllViewByID(){
         num0=(Button)findViewById(R.id.ButtonNum0);
         num1=(Button)findViewById(R.id.ButtonNum1);
@@ -66,11 +68,85 @@ public class MainActivity extends AppCompatActivity{
         TextViewFormula=(TextView)findViewById(R.id.TextViewFormula);
     }
 
+    void SetAllOnClickListener()
+    {
+        num0.setOnClickListener(this);
+        num1.setOnClickListener(this);
+        num2.setOnClickListener(this);
+        num3.setOnClickListener(this);
+        num4.setOnClickListener(this);
+        num5.setOnClickListener(this);
+        num6.setOnClickListener(this);
+        num7.setOnClickListener(this);
+        num8.setOnClickListener(this);
+        num9.setOnClickListener(this);
+        ButtonAdd.setOnClickListener(this);
+        ButtonSub.setOnClickListener(this);
+        ButtonMul.setOnClickListener(this);
+        ButtonDiv.setOnClickListener(this);
+        ButtonEqu.setOnClickListener(this);
+        ButtonAC.setOnClickListener(this);
+        ButtonDel.setOnClickListener(this);
+        ButtonPoint.setOnClickListener(this);
+        ButtonMinus.setOnClickListener(this);
+        ButtonShowHistory.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(formula.equals("0"))
+            formula="";
+        Button btn=(Button)view;
+        int len=formula.length();
+        switch (view.getId()){
+            case R.id.ButtonNum0:
+            case R.id.ButtonNum1:
+            case R.id.ButtonNum2:
+            case R.id.ButtonNum3:
+            case R.id.ButtonNum4:
+            case R.id.ButtonNum5:
+            case R.id.ButtonNum6:
+            case R.id.ButtonNum7:
+            case R.id.ButtonNum8:
+            case R.id.ButtonNum9:
+            case R.id.ButtonPoint:
+                formula+=btn.getText().toString();
+                break;
+            case R.id.ButtonAdd:
+            case R.id.ButtonSub:
+            case R.id.ButtonMul:
+            case R.id.ButtonDiv:
+                char ss=formula.charAt(len-1);
+                if (ss=='+'||ss=='—'||ss=='×'||ss=='÷'){
+                    formula=formula.substring(0,len-1);
+                }
+                formula+=btn.getText().toString();
+                break;
+            case R.id.ButtonAC:
+                formula="0";
+                break;
+            case R.id.ButtonDel:
+                formula=formula.substring(0, len- 2);
+                break;
+            case R.id.ButtonMinus:
+                if(formula.charAt(0)=='-'){
+                    formula=formula.substring(1,len-1);
+                }else{
+                    formula="-"+formula;
+                }
+                break;
+            case R.id.ButtonEqu:
+                break;
+        }
+        TextViewFormula.setText(formula);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FindAllViewByID();
+        SetAllOnClickListener();
     }
 
 }
