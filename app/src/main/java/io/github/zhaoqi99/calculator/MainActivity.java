@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView TextViewResult;
 
     private String formula="0";
+    boolean flag=false;//
+
     void FindAllViewByID(){
         num0=(Button)findViewById(R.id.ButtonNum0);
         num1=(Button)findViewById(R.id.ButtonNum1);
@@ -97,8 +99,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if(formula.equals("0"))
-            formula="";
         Button btn=(Button)view;
         int len=formula.length();
         switch (view.getId()){
@@ -113,38 +113,74 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.ButtonNum8:
             case R.id.ButtonNum9:
             case R.id.ButtonPoint:
+                if(view.getId()!=R.id.ButtonPoint&&formula=="0"){
+                    formula="";
+                }
+                if(flag==true){
+                    formula="0";
+                    flag=false;
+                }
                 formula+=btn.getText().toString();
+                TextViewFormula.setText(formula);
                 break;
             case R.id.ButtonAdd:
             case R.id.ButtonSub:
             case R.id.ButtonMul:
             case R.id.ButtonDiv:
-                char ss=formula.charAt(len-1);
-                if (ss=='+'||ss=='—'||ss=='×'||ss=='÷'){
-                    formula=formula.substring(0,len-1);
+                if(len>0) {
+                    char ss = formula.charAt(len - 1);
+                    if (ss == '+' || ss == '-' || ss == '×' || ss == '÷') {
+                        formula = formula.substring(0, len - 1);
+                    }
+                }
+                if(flag==true){
+                    formula=TextViewResult.getText().toString();
+                    flag=false;
                 }
                 formula+=btn.getText().toString();
+                TextViewFormula.setText(formula);
                 break;
             case R.id.ButtonAC:
                 formula="0";
+                TextViewFormula.setText(formula);
+                TextViewResult.setText("");
                 break;
             case R.id.ButtonDel:
-                formula=formula.substring(0, len- 2);
+                if(len>0) {
+                    formula = formula.substring(0, len - 1);
+                }
+                TextViewFormula.setText(formula);
                 break;
             case R.id.ButtonMinus:
-                if(formula.charAt(0)=='-'){
-                    formula=formula.substring(1,len-1);
-                }else{
-                    formula="-"+formula;
+                if(flag==true){
+                    String result=TextViewResult.getText().toString();
+                    if (result.charAt(0) == '-') {
+                        formula = result.substring(1, result.length());
+                    } else {
+                        formula="-"+result;
+                    }
+                    flag = false;
+                } else {
+                    if (len > 0) {
+                        char ss = formula.charAt(len - 1);
+                        if (ss == '+' || ss == '-' || ss == '×' || ss == '÷') {
+                            formula += "-";
+                        } else if (formula.charAt(0) == '-') {
+                            formula = formula.substring(1, len);
+                        } else {
+                            formula = "-"+formula;
+                        }
+                    }
                 }
+                TextViewFormula.setText(formula);
                 break;
             case R.id.ButtonEqu:
                 String f=TextViewFormula.getText().toString();
                 String result=Cal(f);
                 TextViewResult.setText(result);
+                flag=true;
                 break;
         }
-        TextViewFormula.setText(formula);
     }
 
     @Override
@@ -166,6 +202,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }finally {
             return result;
         }
-
     }
 }
