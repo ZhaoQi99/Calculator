@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff4081</color>
+    <color name="colorSplitLine">#FF5C6265</color>
+    <color name="colorBackground">#181820</color>
+    <color name="colorBtnNormal">#373B4A</color>
+    <color name="colorBtnPressed">#2D313E</color>
+    <color name="colorSymbolBtnNormal">#A63D46</color>
+    <color name="colorSymbolBtnPressed">#94343C</color>
+    <color name="colorBtnText">#D1D2D5</color>
 </resources>
