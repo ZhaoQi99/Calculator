@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Calculator</string>
+    <string name="button_add">+</string>
+    <string name="button_sub">-</string>
+    <string name="button_div">÷</string>
+    <string name="button_mul">×</string>
+    <string name="button_equ">=</string>
+    <string name="button_minus">±</string>
+    <string name="button_del">DEL</string>
+    <string name="button_ac">C</string>
+    <string name="button_showhistory">显示历史记录</string>
 </resources>
