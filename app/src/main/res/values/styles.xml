@@ -22,4 +22,10 @@
     <style name="SymbolBtnStyle" parent="BaseBtnStyle">
         <item name="android:background">@drawable/symbol_btn_selector</item>
     </style>
+
+    <style name="TextViewStyle">
+        <item name="android:textColor">@color/colorTextViewText</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20dp</item>
+    </style>
 </resources>

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorBackground"
     tools:context=".ShowHistoryActivity">
 
     <LinearLayout
@@ -14,25 +15,36 @@
 
         <TextView
             android:id="@+id/TxetViewHisIndex"
-            android:layout_width="wrap_content"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.3"
             android:text="序号" />
 
         <TextView
             android:id="@+id/TextViewHisFormula"
-            android:layout_width="wrap_content"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="表达式" />
 
         <TextView
             android:id="@+id/TextViewHisResult"
-            android:layout_width="wrap_content"
+            style="@style/TextViewStyle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_weight="0.7"
             android:text="计算结果" />
+
     </LinearLayout>
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorSplitLine"
+        android:visibility="visible" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,6 +54,8 @@
         <ListView
             android:id="@+id/ListviewHis"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:divider="@color/colorSplitLine"
+            android:dividerHeight="0.5dp" />
     </LinearLayout>
 </LinearLayout>
