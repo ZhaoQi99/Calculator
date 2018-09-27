@@ -1,10 +1,12 @@
 package io.github.zhaoqi99.calculator;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.javia.arity.Symbols;
 import org.javia.arity.SyntaxException;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private String formula="0";
     boolean flag=false;//
+    HistoryOperator historyOperator;
 
     void FindAllViewByID(){
         num0=(Button)findViewById(R.id.ButtonNum0);
@@ -95,6 +98,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButtonPoint.setOnClickListener(this);
         ButtonMinus.setOnClickListener(this);
         ButtonShowHistory.setOnClickListener(this);
+        ButtonShowHistory.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                historyOperator.Clear();
+                Toast.makeText(MainActivity.this, "历史记录清空完成.",Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -117,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     formula="";
                 }
                 if(flag==true){
-                    formula="0";
+                    formula="";
                     flag=false;
                 }
                 formula+=btn.getText().toString();
@@ -177,8 +188,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.ButtonEqu:
                 String f=TextViewFormula.getText().toString();
                 String result=Cal(f);
-                TextViewResult.setText(result);
+                HistoryItem item=new HistoryItem(f,result);
                 flag=true;
+                historyOperator.Add(item);
+                TextViewResult.setText(result);
+                break;
+            case R.id.ButtonShowHistory:
+                Intent intent=new Intent(MainActivity.this,ShowHistoryActivity.class);
+                startActivity(intent);
                 break;
         }
     }
@@ -189,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         FindAllViewByID();
         SetAllOnClickListener();
+        historyOperator=new HistoryOperator(this);
     }
 
     public String Cal(String formula){
